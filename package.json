@@ -1,0 +1,16 @@
+{
+  "name": "incremental-game",
+  "version": "1.0.0",
+  "description": "An incremental game built with TypeScript",
+  "main": "main.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc -w"
+  },
+  "dependencies": {
+    "@types/node": "^20.11.19"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
