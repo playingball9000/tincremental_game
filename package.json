@@ -4,13 +4,16 @@
   "description": "An incremental game built with TypeScript",
   "main": "main.js",
   "scripts": {
-    "build": "tsc",
-    "start": "tsc -w"
+    "build": "tsc --outDir dist",
+    "start": "tsc -w",
+    "clean": "rm -rf dist", 
+    "dev": "npm run clean && npm run build && http-server -o"
   },
   "dependencies": {
     "@types/node": "^20.11.19"
   },
   "devDependencies": {
+    "http-server": "^14.1.1",
     "typescript": "^5.3.3"
   }
 }
