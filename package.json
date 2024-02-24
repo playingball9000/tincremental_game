@@ -7,7 +7,7 @@
     "build": "tsc --outDir dist && cp index.html dist",
     "start": "tsc -w",
     "clean": "rm -rf dist",
-    "dev": "npm run clean && npm run build && http-server -o"
+    "dev": "npm run clean && npm run build && cd dist && http-server -o"
   },
   "dependencies": {
     "@types/node": "^20.11.19"
