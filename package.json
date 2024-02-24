@@ -4,7 +4,7 @@
   "description": "An incremental game built with TypeScript",
   "main": "main.js",
   "scripts": {
-    "build": "tsc --outDir dist",
+    "build": "tsc --outDir dist && cp index.html dist",
     "start": "tsc -w",
     "clean": "rm -rf dist",
     "dev": "npm run clean && npm run build && http-server -o"
