@@ -1,22 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Incremental Game</title>
-  <style>
-    /* Add your CSS styles here */
-  </style>
-</head>
-<body>
-  <h1>Incremental Game</h1>
-  <p>Click the button to increase your score:</p>
-  <button id="clickButton">Click Me!</button>
-  <button id="clickButton2">Click This!</button>
-  <p id="score">Score: 0</p>
 
-  <!-- Include your TypeScript file -->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Incremental Game</title>
+  <link type="text/css" rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="main-container">
+    <div class="vertical-container" id="column1">
+      <div class="game-container">
+        <h1>Incremental Game</h1>
+        <p>Click the button to increase your score:</p>
+        <button id="clickButton">Click Me!</button>
+        <button id="clickButton2">Click This!</button>
+        <p id="score">Score: 0</p>
+      </div>
+      <div class="sub-div">
+        <div class="pane inventory">
+          <h2>Inventory</h2>
+          <ul>
+            <li>Food: 100 lbs</li>
+            <li>Bullets: 50</li>
+            <li>Clothing: 10 sets</li>
+            <li>Oxen: 2</li>
+            <li>Wagon Parts: 3</li>
+          </ul>
+        </div>
+      </div>
+      <div class="sub-div">Content 1.3</div>
+    </div>
+    <div class="column" id="column2">
+      <div class="sub-div">Content 2.1</div>
+      <div class="pane map">
+        <h2>Map</h2>
+        <div style="
+              height: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            ">
+          <canvas id="mapCanvas"></canvas>
+        </div>
+      </div>
+      <div class="sub-div">Content 2.3</div>
+    </div>
+    <div class="column" id="column3">
+      <div class="sub-div">Content 3.1</div>
+      <div class="sub-div">Content 3.2</div>
+      <div class="sub-div">Content 3.3</div>
+    </div>
+  </div>
+
+
+
   <script src="bundle.js"></script>
-  <!-- <script src="main.js"></script> -->
 </body>
+
 </html>

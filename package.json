@@ -4,14 +4,13 @@
   "description": "An incremental game built with TypeScript",
   "main": "main.js",
   "scripts": {
-    "build": "npx webpack && cp index.html dist",
+    "build": "npx webpack && cp index.html dist && cp styles.css dist",
     "start": "tsc -w",
     "clean": "rm -rf dist",
-    "dev": "npm run clean && npm run build && cd dist && http-server -o"
+    "dev": "npm run clean && npm run build && cd dist && http-server -c-1 -o"
   },
   "dependencies": {
-    "@types/node": "^20.11.19",
-    "systemjs": "^6.15.1"
+    "@types/node": "^20.11.19"
   },
   "devDependencies": {
     "gh-pages": "^6.1.1",
