@@ -1,0 +1,80 @@
+body {
+  background-color: #222;
+  color: #fff;
+  font-family: "Courier New", Courier, monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+.vertical-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: auto;
+}
+.horizontal-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: auto;
+}
+.game-container {
+  display: flex;
+  flex-direction: column;
+  border: 5px solid #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+  background: linear-gradient(145deg, #333, #111);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  margin-top: 20px;
+}
+.title {
+  font-size: 3em;
+  margin-bottom: 30px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+.menu {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+}
+.menu button {
+  background-color: #333;
+  color: #fff;
+  border: 2px solid #fff;
+  padding: 15px 30px;
+  margin: 10px;
+  font-size: 1.5em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+.menu button:hover {
+  background-color: #fff;
+  color: #333;
+  transform: scale(1.1);
+}
+.main-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.column {
+  width: 30%;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.sub-div {
+  border: 1px solid #000;
+  margin-bottom: 10px;
+  padding: 10px;
+}
