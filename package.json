@@ -10,7 +10,8 @@
     "dev": "npm run clean && npm run build && http-server -c-1 -o"
   },
   "dependencies": {
-    "@types/node": "^20.11.19"
+    "@types/node": "^20.11.19",
+    "util": "^0.12.5"
   },
   "devDependencies": {
     "gh-pages": "^6.1.1",
