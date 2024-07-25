@@ -1,4 +1,4 @@
-import { GameEngine } from "./core/gameEngine";
+import { GameEngine } from "./core/GameEngine";
 
 // Instantiate the game
 const game = new GameEngine();
