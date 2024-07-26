@@ -1,4 +1,4 @@
-import { MapNode } from "./domain/MapNode";
+import { Coordinates, MapNode } from "./domain/MapNode";
 import { Player } from "./domain/Player";
 import { aStar } from "./Pathfinding";
 
@@ -58,31 +58,31 @@ export class MapManager {
   }
 
   startTravel(
-    start: MapNode,
-    destination: MapNode,
+    start: Coordinates,
+    destination: Coordinates,
     // grid: MapNode[][],
     player: Player
   ) {
     this.pathCounter = 0;
 
     // deep copy for modifying new values
-    const path = aStar(start, destination, this.grid)?.map((node) => ({
+    const path = aStar(
+      this.getMapNode(start.x, start.y),
+      this.getMapNode(destination.x, destination.y),
+      this.grid
+    )?.map((node) => ({
       ...node,
     }));
     console.log(path);
     if (path) {
       this.intervalId = setInterval(
-        () => this.calculateTravelDistance(path, destination, player),
+        () => this.calculateTravelDistance(path, player),
         1000
       );
     }
   }
 
-  calculateTravelDistance(
-    path: MapNode[],
-    destination: MapNode,
-    player: Player
-  ) {
+  calculateTravelDistance(path: MapNode[], player: Player) {
     console.log("calculateTravelDistance");
     let travelling = player.speed;
 
@@ -104,7 +104,10 @@ export class MapManager {
     // );
 
     // update player location to current location on path
-    player.location = [path[this.pathCounter].x, path[this.pathCounter].y];
+    player.location = {
+      x: path[this.pathCounter].coordinates.x,
+      y: path[this.pathCounter].coordinates.y,
+    };
     console.log(player.location);
 
     this.drawMap(this.grid, this.ctx);
@@ -144,12 +147,19 @@ export class MapManager {
       ctx.fillStyle = "green";
       for (const node of path) {
         ctx.fillRect(
-          node.x * this.cellSize,
-          node.y * this.cellSize,
+          node.coordinates.x * this.cellSize,
+          node.coordinates.y * this.cellSize,
           this.cellSize,
           this.cellSize
         );
       }
     }
+  }
+
+  getMapNode(x: number, y: number): MapNode {
+    if (x < 0 || x >= this.grid[0].length || y < 0 || y >= this.grid.length) {
+      throw new Error("Coordinates out of bounds");
+    }
+    return this.grid[y][x];
   }
 }

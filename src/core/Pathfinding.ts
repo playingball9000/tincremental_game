@@ -1,7 +1,10 @@
 import { MapNode } from "./domain/MapNode";
 
 function heuristic(a: MapNode, b: MapNode): number {
-  return Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
+  return (
+    Math.abs(a.coordinates.x - b.coordinates.x) +
+    Math.abs(a.coordinates.y - b.coordinates.y)
+  );
 }
 
 function getNeighbors(node: MapNode, grid: MapNode[][]): MapNode[] {
@@ -14,8 +17,8 @@ function getNeighbors(node: MapNode, grid: MapNode[][]): MapNode[] {
   ];
 
   for (const [dx, dy] of directions) {
-    const x = node.x + dx;
-    const y = node.y + dy;
+    const x = node.coordinates.x + dx;
+    const y = node.coordinates.y + dy;
 
     if (
       x >= 0 &&
@@ -51,7 +54,10 @@ export function aStar(
 
     const currentNode = openList[lowestIndex];
 
-    if (currentNode.x === goal.x && currentNode.y === goal.y) {
+    if (
+      currentNode.coordinates.x === goal.coordinates.x &&
+      currentNode.coordinates.y === goal.coordinates.y
+    ) {
       const path: MapNode[] = [];
       let temp: MapNode | null = currentNode;
       while (temp) {
@@ -62,11 +68,13 @@ export function aStar(
     }
 
     openList.splice(lowestIndex, 1);
-    closedList.add(`${currentNode.x},${currentNode.y}`);
+    closedList.add(`${currentNode.coordinates.x},${currentNode.coordinates.y}`);
 
     const neighbors = getNeighbors(currentNode, grid);
     for (const neighbor of neighbors) {
-      if (closedList.has(`${neighbor.x},${neighbor.y}`)) {
+      if (
+        closedList.has(`${neighbor.coordinates.x},${neighbor.coordinates.y}`)
+      ) {
         continue;
       }
 
@@ -74,7 +82,11 @@ export function aStar(
       let gScoreIsBest = false;
 
       if (
-        !openList.some((node) => node.x === neighbor.x && node.y === neighbor.y)
+        !openList.some(
+          (node) =>
+            node.coordinates.x === neighbor.coordinates.x &&
+            node.coordinates.y === neighbor.coordinates.y
+        )
       ) {
         gScoreIsBest = true;
         neighbor.h = heuristic(neighbor, goal);

@@ -1,8 +1,12 @@
 import { Terrain } from "./Terrain";
 
-export class MapNode {
+export type Coordinates = {
   x: number;
   y: number;
+};
+
+export class MapNode {
+  coordinates: Coordinates;
   walkable: boolean;
   g: number;
   h: number;
@@ -19,8 +23,7 @@ export class MapNode {
     parent: MapNode | null = null,
     terrain?: Terrain
   ) {
-    this.x = x;
-    this.y = y;
+    this.coordinates = { x, y };
     this.walkable = walkable;
     this.g = g;
     this.h = h;

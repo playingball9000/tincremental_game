@@ -1,6 +1,4 @@
 import { MapManager } from "./MapManager";
-import { aStar } from "./Pathfinding";
-import { MapNode } from "./domain/MapNode";
 import { Player } from "./domain/Player";
 
 export class GameEngine {
@@ -37,10 +35,6 @@ export class GameEngine {
     console.log("autoIncrement");
     this.score += this.autoIncrementValue;
     this.updateScoreDisplay();
-
-    let distance = this.player.speed;
-
-    while (distance > 0) {}
   }
 
   // Method to update the score display in the HTML
@@ -88,8 +82,8 @@ export class GameEngine {
 
     this.mapManager.initializeMap();
     this.mapManager.startTravel(
-      new MapNode(0, 0, true),
-      new MapNode(4, 4, true),
+      this.player.location,
+      { x: 4, y: 4 },
       this.player
     );
   }

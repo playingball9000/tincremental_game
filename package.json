@@ -4,10 +4,10 @@
   "description": "An incremental game built with TypeScript",
   "main": "main.js",
   "scripts": {
-    "build": "npx webpack && cp index.html dist && cp styles.css dist && cd dist",
+    "build": "npx webpack && cp index.html dist && cp styles.css dist",
     "start": "tsc -w",
     "clean": "rm -rf dist",
-    "dev": "npm run clean && npm run build && http-server -c-1 -o"
+    "dev": "npm run clean && npm run build && cd dist && http-server -c-1 -o"
   },
   "dependencies": {
     "@types/node": "^20.11.19",
