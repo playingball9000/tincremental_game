@@ -1,9 +1,10 @@
 import { Coordinates, MapNode } from "./domain/MapNode";
 import { Player } from "./domain/Player";
 import { aStar } from "./Pathfinding";
+import { sendMessageToLog } from "./UiHelper";
 
 export class MapManager {
-  private intervalId: ReturnType<typeof setInterval> | undefined;
+  private travelIntervalId: ReturnType<typeof setInterval> | undefined;
   grid: MapNode[][];
   ctx: CanvasRenderingContext2D;
   pathCounter = 0;
@@ -57,17 +58,12 @@ export class MapManager {
     this.drawMap(this.grid, this.ctx);
   }
 
-  startTravel(
-    start: Coordinates,
-    destination: Coordinates,
-    // grid: MapNode[][],
-    player: Player
-  ) {
+  startTravel(destination: Coordinates, player: Player) {
     this.pathCounter = 0;
 
     // deep copy for modifying new values
     const path = aStar(
-      this.getMapNode(start.x, start.y),
+      this.getMapNode(player.location.x, player.location.y),
       this.getMapNode(destination.x, destination.y),
       this.grid
     )?.map((node) => ({
@@ -75,7 +71,7 @@ export class MapManager {
     }));
     console.log(path);
     if (path) {
-      this.intervalId = setInterval(
+      this.travelIntervalId = setInterval(
         () => this.calculateTravelDistance(path, player),
         1000
       );
@@ -83,7 +79,6 @@ export class MapManager {
   }
 
   calculateTravelDistance(path: MapNode[], player: Player) {
-    console.log("calculateTravelDistance");
     let travelling = player.speed;
 
     while (travelling > 0 && this.pathCounter < path.length) {
@@ -114,10 +109,18 @@ export class MapManager {
     this.drawPath(path, this.ctx);
     player.drawPlayer(this.ctx);
 
+    sendMessageToLog(`You travelled: ${player.speed}`);
+
+    // If the player reaches the destination, then turn off the repeating interval
     if (this.pathCounter + 1 === path.length) {
-      if (this.intervalId !== undefined) {
-        clearInterval(this.intervalId);
-        this.intervalId = undefined;
+      if (this.travelIntervalId !== undefined) {
+        clearInterval(this.travelIntervalId);
+        this.travelIntervalId = undefined;
+
+        this.drawMap(this.grid, this.ctx);
+        player.drawPlayer(this.ctx);
+
+        sendMessageToLog("You have arrived!");
       }
     }
   }
@@ -162,4 +165,39 @@ export class MapManager {
     }
     return this.grid[y][x];
   }
+}
+
+export function selectTravelOption(optionText: string | null) {
+  console.log("selectOption");
+  // Remove the 'selected' class from all options
+  const travelOptions = document.querySelectorAll(".travel-button");
+  travelOptions.forEach((option) => {
+    option.classList.remove("selected");
+    const confirmButton = option.nextElementSibling;
+    if (confirmButton && confirmButton.classList.contains("confirm-button")) {
+      confirmButton.remove();
+    }
+  });
+
+  // Add the 'selected' class to the clicked option
+  const selectedOption = Array.from(travelOptions).find(
+    (option) => option.textContent === optionText
+  )!;
+  selectedOption.classList.add("selected");
+  const confirmButton = document.createElement("div");
+  confirmButton.className = "confirm-button";
+  confirmButton.textContent = "Confirm";
+
+  confirmButton.onclick = () => confirmTravelSelection(optionText);
+
+  selectedOption.insertAdjacentElement("afterend", confirmButton);
+
+  // Display the selected option
+  document.getElementById("selected-travel-button")!.textContent =
+    "Selected option: " + optionText;
+}
+
+function confirmTravelSelection(optionText: string | null) {
+  document.getElementById("selected-option")!.textContent =
+    "Selected option: " + optionText;
 }

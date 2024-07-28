@@ -67,13 +67,6 @@ export class GameEngine {
       clickButton2.addEventListener("click", () => this.click2());
       console.log("clickButton2");
     }
-    // Start automatic score increment
-    // setInterval(() => this.autoIncrement(), 1000); // Increment every second
-
-    // setInterval(() => {
-    //   localStorage.setItem("goldMinerSave", JSON.stringify(this));
-    //   console.log("game saved: ", this.score);
-    // }, 15000);
 
     const myDiv = document.getElementById("player-inventory")!;
 
@@ -81,10 +74,6 @@ export class GameEngine {
     myDiv.textContent = `x/${this.player.inventorySpace}`;
 
     this.mapManager.initializeMap();
-    this.mapManager.startTravel(
-      this.player.location,
-      { x: 4, y: 4 },
-      this.player
-    );
+    this.mapManager.startTravel({ x: 4, y: 4 }, this.player);
   }
 }

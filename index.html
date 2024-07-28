@@ -12,11 +12,22 @@
   <div class="main-container">
     <div class="vertical-container" id="column1">
       <div class="game-container">
-        <h1>Incremental Game</h1>
-        <p>Click the button to increase your score:</p>
-        <button id="clickButton">Click Me!</button>
-        <button id="clickButton2">Click This!</button>
-        <p id="score">Score: 0</p>
+        <p>Choose an option:</p>
+        <div class="travel-buttons">
+          <div class="travel-button-container">
+            <div class="travel-button" id="travelHome">Home</div>
+          </div>
+          <div class="travel-button-container">
+
+            <div class="travel-button" id="travelCity">City</div>
+          </div>
+
+          <div class="travel-button-container">
+            <div class="travel-button" id="travelTown">Town</div>
+          </div>
+
+        </div>
+        <p id="selected-travel-button">Selected option: None</p>
       </div>
       <div class="game-container">
         <div class="inventory-container">
@@ -32,12 +43,8 @@
 
     <div class="vertical-container" id="column1">
       <canvas id="gameCanvas" width="500" height="400"></canvas>
-      <div id="log-container" style="width: 100%; height: 100%; border: 1px solid #000;">
-        <div id="log-messages"></div>
-        <ul>
-          <li>You acquire Food: 100 lbs</li>
-          <li>You acquire Bullets: 50</li>
-        </ul>
+      <div id="log-container" style="width: 100%; height: 200px; overflow-y: scroll; border: 1px solid #000;">
+
       </div>
     </div>
 
@@ -45,7 +52,7 @@
       <div class="game-container">
         <h1>Incremental Game</h1>
         <p>Click the button to increase your score:</p>
-        <button id="clickButton">Click Me!</button>
+        <button id="clickButton" class="menu-button">Click Me!</button>
         <button id="clickButton2">Click This!</button>
         <p id="score">Score: 0</p>
       </div>
