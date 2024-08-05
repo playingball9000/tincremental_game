@@ -1,5 +1,6 @@
-import { Coordinates, MapNode } from "./domain/MapNode";
-import { Player } from "./domain/Player";
+import { Coordinates, MapNode } from "../domain/MapNode";
+import { Player } from "../domain/Player";
+import { screenDrawer } from "./DrawingUtil";
 import { aStar } from "./Pathfinding";
 import { sendMessageToLog } from "./UiHelper";
 
@@ -8,7 +9,6 @@ export class MapManager {
   grid: MapNode[][];
   ctx: CanvasRenderingContext2D;
   pathCounter = 0;
-  cellSize = 25;
 
   constructor() {
     this.grid = [];
@@ -55,7 +55,7 @@ export class MapManager {
       ],
     ];
 
-    this.drawMap(this.grid, this.ctx);
+    screenDrawer.drawMap(this.grid);
   }
 
   startTravel(destination: Coordinates, player: Player) {
@@ -105,9 +105,9 @@ export class MapManager {
     };
     console.log(player.location);
 
-    this.drawMap(this.grid, this.ctx);
-    this.drawPath(path, this.ctx);
-    player.drawPlayer(this.ctx);
+    screenDrawer.drawMap(this.grid);
+    screenDrawer.drawPath(path);
+    screenDrawer.drawPlayer(player.location);
 
     sendMessageToLog(`You travelled: ${player.speed}`);
 
@@ -117,44 +117,10 @@ export class MapManager {
         clearInterval(this.travelIntervalId);
         this.travelIntervalId = undefined;
 
-        this.drawMap(this.grid, this.ctx);
-        player.drawPlayer(this.ctx);
+        screenDrawer.drawMap(this.grid);
+        screenDrawer.drawPlayer(player.location);
 
         sendMessageToLog("You have arrived!");
-      }
-    }
-  }
-
-  drawMap(grid: MapNode[][], ctx: CanvasRenderingContext2D) {
-    for (let y = 0; y < grid.length; y++) {
-      for (let x = 0; x < grid[y].length; x++) {
-        ctx.fillStyle = grid[y][x].walkable ? "white" : "black";
-        ctx.fillRect(
-          x * this.cellSize,
-          y * this.cellSize,
-          this.cellSize,
-          this.cellSize
-        );
-        ctx.strokeRect(
-          x * this.cellSize,
-          y * this.cellSize,
-          this.cellSize,
-          this.cellSize
-        );
-      }
-    }
-  }
-
-  drawPath(path: MapNode[] | null, ctx: CanvasRenderingContext2D) {
-    if (path) {
-      ctx.fillStyle = "green";
-      for (const node of path) {
-        ctx.fillRect(
-          node.coordinates.x * this.cellSize,
-          node.coordinates.y * this.cellSize,
-          this.cellSize,
-          this.cellSize
-        );
       }
     }
   }
@@ -198,6 +164,7 @@ export function selectTravelOption(optionText: string | null) {
 }
 
 function confirmTravelSelection(optionText: string | null) {
-  document.getElementById("selected-option")!.textContent =
+  console.log("travelling to: ", optionText);
+  document.getElementById("selected-travel-button")!.textContent =
     "Selected option: " + optionText;
 }

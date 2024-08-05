@@ -1,4 +1,4 @@
-import { MapNode } from "./domain/MapNode";
+import { MapNode } from "../domain/MapNode";
 
 function heuristic(a: MapNode, b: MapNode): number {
   return (

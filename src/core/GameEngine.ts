@@ -1,5 +1,6 @@
 import { MapManager } from "./MapManager";
-import { Player } from "./domain/Player";
+import { Player } from "../domain/Player";
+import { ScreenDrawer } from "./DrawingUtil";
 
 export class GameEngine {
   // Properties to keep track of game state
@@ -47,12 +48,12 @@ export class GameEngine {
 
   // Method to initialize the game
   init() {
-    console.log("initialize");
+    console.log("initialize game");
+    const screenDrawer = new ScreenDrawer();
     let storage = localStorage.getItem("goldMinerSave");
     if (storage) {
       let savegame = JSON.parse(storage);
       this.score = savegame.score;
-      console.log("loaded: ", this.score);
       this.updateScoreDisplay();
     }
 
@@ -65,7 +66,6 @@ export class GameEngine {
 
     if (clickButton2) {
       clickButton2.addEventListener("click", () => this.click2());
-      console.log("clickButton2");
     }
 
     const myDiv = document.getElementById("player-inventory")!;
