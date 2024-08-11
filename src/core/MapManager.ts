@@ -1,3 +1,5 @@
+import { CONFIRM_BUTTON_ID, TRAVEL_BUTTON_NAME } from "../constants/Constants";
+import { Location } from "../domain/Location";
 import { Coordinates, MapNode } from "../domain/MapNode";
 import { Player } from "../domain/Player";
 import { screenDrawer } from "./DrawingUtil";
@@ -6,15 +8,13 @@ import { sendMessageToLog } from "./UiHelper";
 
 export class MapManager {
   private travelIntervalId: ReturnType<typeof setInterval> | undefined;
-  grid: MapNode[][];
-  ctx: CanvasRenderingContext2D;
+
+  locations: Location[] = [];
+
+  grid: MapNode[][] = [];
   pathCounter = 0;
 
-  constructor() {
-    this.grid = [];
-    const canvas = document.getElementById("gameCanvas") as HTMLCanvasElement;
-    this.ctx = canvas.getContext("2d")!;
-  }
+  constructor() {}
 
   initializeMap() {
     this.grid = [
@@ -135,23 +135,20 @@ export class MapManager {
 
 export function selectTravelOption(optionText: string | null) {
   console.log("selectOption");
-  // Remove the 'selected' class from all options
-  const travelOptions = document.querySelectorAll(".travel-button");
-  travelOptions.forEach((option) => {
-    option.classList.remove("selected");
-    const confirmButton = option.nextElementSibling;
-    if (confirmButton && confirmButton.classList.contains("confirm-button")) {
-      confirmButton.remove();
-    }
-  });
+  removeSelectedClassFromTravelButtons();
+  removeTravelConfirmButton();
 
+  const travelOptions = document.querySelectorAll("." + TRAVEL_BUTTON_NAME);
   // Add the 'selected' class to the clicked option
   const selectedOption = Array.from(travelOptions).find(
     (option) => option.textContent === optionText
   )!;
   selectedOption.classList.add("selected");
+
+  // Create Confirm button
   const confirmButton = document.createElement("div");
   confirmButton.className = "confirm-button";
+  confirmButton.id = CONFIRM_BUTTON_ID;
   confirmButton.textContent = "Confirm";
 
   confirmButton.onclick = () => confirmTravelSelection(optionText);
@@ -163,8 +160,28 @@ export function selectTravelOption(optionText: string | null) {
     "Selected option: " + optionText;
 }
 
+/**
+ * This is invoked when Travel -> Confirm is clicked
+ * @param optionText
+ */
 function confirmTravelSelection(optionText: string | null) {
   console.log("travelling to: ", optionText);
   document.getElementById("selected-travel-button")!.textContent =
     "Selected option: " + optionText;
+  removeSelectedClassFromTravelButtons();
+  removeTravelConfirmButton();
+}
+
+function removeSelectedClassFromTravelButtons() {
+  const travelOptions = document.querySelectorAll("." + TRAVEL_BUTTON_NAME);
+  travelOptions.forEach((option) => {
+    option.classList.remove("selected");
+  });
+}
+
+function removeTravelConfirmButton() {
+  const confirmButton = document.getElementById(CONFIRM_BUTTON_ID);
+  if (confirmButton) {
+    confirmButton.remove();
+  }
 }

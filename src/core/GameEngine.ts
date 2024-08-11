@@ -1,6 +1,8 @@
 import { MapManager } from "./MapManager";
 import { Player } from "../domain/Player";
 import { ScreenDrawer } from "./DrawingUtil";
+import { City, Home } from "../domain/Location";
+import { generateTravelButtonsDiv } from "./UiHelper";
 
 export class GameEngine {
   // Properties to keep track of game state
@@ -50,6 +52,14 @@ export class GameEngine {
   init() {
     console.log("initialize game");
     const screenDrawer = new ScreenDrawer();
+
+    const home = new Home(1, "Home", "Your Home", { x: 0, y: 0 }, []);
+    const town = new City(2, "Town", "Small town", { x: 2, y: 3 }, []);
+    const city = new City(3, "City", "Bustling city", { x: 4, y: 4 }, []);
+
+    this.mapManager.locations = [home, town, city];
+    generateTravelButtonsDiv(this.mapManager.locations, "column1");
+
     let storage = localStorage.getItem("goldMinerSave");
     if (storage) {
       let savegame = JSON.parse(storage);
